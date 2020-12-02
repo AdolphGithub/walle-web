@@ -1,36 +1,31 @@
 # -*- coding: utf-8 -*-
 """
     walle-web
-
-    :copyright: © 2015-2019 walle-web.io
-    :created time: 2018-12-23 20:17:14
-    :author: wushuiyong@walle-web.io
+    :created time: 2020-12-02 13:33:01
+    :author: adolphgithub
 """
-import json
-
-import requests
 from . import Notice
 from walle.model.project import ProjectModel
+import requests, json
 
 
-class Dingding(Notice):
-
+class WxWork(Notice):
     def deploy_task(self, project_info, notice_info):
         if notice_info['repo_mode'] == ProjectModel.repo_mode_tag:
             version = notice_info['tag']
         else:
             version = '%s/%s' % (notice_info['branch'], notice_info['commit'])
+
+        content = """%s %s\n>项目：<font color="warning">%s</font> \n>任务：%s \n>版本：%s""" \
+                  % (notice_info['username'], notice_info['title'], notice_info['project_name'], notice_info['task_name'], version)
+
         data = {
             "msgtype": "markdown",
             "markdown": {
-                "title": "上线单通知",
-                "text": """#### %s %s  
-                \n> 项目：%s 
-                \n> 任务：%s 
-                \n> 版本：%s \n """ % (
-                notice_info['username'], notice_info['title'], notice_info['project_name'], notice_info['task_name'],
-                version)}
+                "content": content
+            }
         }
+
         '''
         上线单新建, 上线完成, 上线失败
 
@@ -51,3 +46,4 @@ class Dingding(Notice):
             # @todo增加可能错误到console中显示
 
         return True
+

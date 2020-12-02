@@ -16,6 +16,8 @@ class Notice():
 
     by_email = 'email'
 
+    by_wxwork = 'wxwork'
+
     def deploy_task(self, project_info, notice_info):
         pass
 
@@ -41,5 +43,8 @@ class Notice():
         elif by.lower() == cls.by_email:
             from walle.service.notice.email import Email
             return Email()
+        elif by.lower() == cls.by_wxwork:
+            from walle.service.notice.wxwork import WxWork
+            return WxWork()
         else:
             return Notice()

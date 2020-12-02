@@ -80,7 +80,7 @@ class ProjectForm(FlaskForm):
             'repo_mode': self.repo_mode.data if self.repo_mode.data else '',
 
             'notice_type': self.notice_type.data if self.notice_type.data in [Notice.by_email,
-                                                                              Notice.by_dingding] else '',
+                                                                              Notice.by_dingding, Notice.by_wxwork] else '',
             'notice_hook': self.notice_hook.data if self.notice_hook.data else '',
             'task_audit': self.task_audit.data if self.task_audit.data else 0,
             'created_at': datetime.now(),
