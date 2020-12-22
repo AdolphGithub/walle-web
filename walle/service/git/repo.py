@@ -10,6 +10,7 @@
 import os
 import re
 import os.path as osp
+import shutil
 import getpass
 import git as PyGit
 from git import Repo as PyRepo
@@ -98,6 +99,8 @@ class Repo:
             self.checkout_2_branch(branch)
             return self.pull()
         else:
+            # 如果不是git的目录. 先删除. 后面再来读取.
+            shutil.rmtree(self.path)
             return self.clone(url)
 
     def clone(self, url):
